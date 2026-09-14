@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Simulation Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚽ Football Simulation Game</h1>
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-section="home">Home</button>
+                <button class="nav-btn" data-section="editor">Editor de Times</button>
+                <button class="nav-btn" data-section="match">Simulação</button>
+            </nav>
+        </header>
+
+        <!-- SEÇÃO HOME -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Bem-vindo ao Football Simulation Game!</h2>
+                <p>Crie seus times, customize jogadores e simule partidas de futebol.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="goToSection('editor')">
+                        🎨 Criar/Editar Times
+                    </button>
+                    <button class="btn btn-secondary" onclick="goToSection('match')">
+                        ⚽ Simular Partida
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO EDITOR DE TIMES -->
+        <section id="editor" class="section">
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <h2>Editor de Times</h2>
+                    
+                    <!-- Seleção de Time -->
+                    <div class="form-group">
+                        <label>Selecionar Time:</label>
+                        <select id="teamSelect" onchange="loadTeam()">
+                            <option value="">Criar Novo Time</option>
+                        </select>
+                    </div>
+
+                    <!-- Dados do Time -->
+                    <div class="form-group">
+                        <label>Nome do Time:</label>
+                        <input type="text" id="teamName" placeholder="Ex: Flamengo">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cor Principal:</label>
+                        <input type="color" id="teamColor" value="#FF0000">
+                    </div>
+
+                    <!-- Formação Tática -->
+                    <div class="form-group">
+                        <label>Formação Tática:</label>
+                        <select id="formation">
+                            <option value="4-3-3">4-3-3</option>
+                            <option value="4-2-4">4-2-4</option>
+                            <option value="3-5-2">3-5-2</option>
+                            <option value="5-3-2">5-3-2</option>
+                            <option value="4-4-2">4-4-2</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="addPlayer()">
+                        ➕ Adicionar Jogador
+                    </button>
+
+                    <button class="btn btn-success" onclick="saveTeam()">
+                        💾 Salvar Time
+                    </button>
+
+                    <button class="btn btn-danger" onclick="deleteTeam()">
+                        🗑️ Deletar Time
+                    </button>
+                </div>
+
+                <!-- Lista de Jogadores -->
+                <div class="players-panel">
+                    <h3>Elenco do Time</h3>
+                    <div id="playersList" class="players-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO SIMULAÇÃO -->
+        <section id="match" class="section">
+            <div class="match-container">
+                <div class="match-setup">
+                    <h2>Configurar Partida Amistosa</h2>
+                    
+                    <div class="form-group">
+                        <label>Time 1:</label>
+                        <select id="team1Select">
+                            <option value="">Selecione o time...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Time 2:</label>
+                        <select id="team2Select">
+                            <option value="">Selecione o time...</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="startMatch()">
+                        ⚽ Iniciar Partida
+                    </button>
+                </div>
+
+                <!-- Campo de Jogo -->
+                <div id="matchField" class="match-field hidden">
+                    <div class="match-scoreboard">
+                        <div class="team-info team1-info">
+                            <h3 id="team1Name"></h3>
+                            <div class="score" id="team1Score">0</div>
+                        </div>
+                        <div class="match-timer">
+                            <p id="matchTime">00:00</p>
+                            <p id="matchStatus">Preparando...</p>
+                        </div>
+                        <div class="team-info team2-info">
+                            <h3 id="team2Name"></h3>
+                            <div class="score" id="team2Score">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Campo Visual -->
+                    <div class="field-container">
+                        <div class="field">
+                            <div class="field-line"></div>
+                            <div class="center-circle"></div>
+                            <div class="goal goal-1"></div>
+                            <div class="goal goal-2"></div>
+                            
+                            <!-- Jogadores Time 1 -->
+                            <div id="team1Players" class="team-players team1"></div>
+                            
+                            <!-- Jogadores Time 2 -->
+                            <div id="team2Players" class="team-players team2"></div>
+
+                            <!-- Bola -->
+                            <div id="ball" class="ball"></div>
+                        </div>
+                    </div>
+
+                    <!-- Eventos da Partida -->
+                    <div class="events-log">
+                        <h4>📋 Eventos da Partida</h4>
+                        <div id="eventsList" class="events-list"></div>
+                    </div>
+
+                    <!-- Controles -->
+                    <div class="match-controls">
+                        <button class="btn btn-secondary" onclick="pauseMatch()" id="pauseBtn">
+                            ⏸️ Pausar
+                        </button>
+                        <button class="btn btn-secondary" onclick="resumeMatch()" id="resumeBtn" style="display:none;">
+                            ▶️ Retomar
+                        </button>
+                        <button class="btn btn-danger" onclick="endMatch()">
+                            ⏹️ Encerrar Partida
+                        </button>
+                    </div>
+
+                    <!-- Resultado Final -->
+                    <div id="matchResult" class="match-result hidden">
+                        <h2 id="resultTitle"></h2>
+                        <div class="result-stats">
+                            <div id="resultStats"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="goToSection('match')">
+                            🔄 Nova Partida
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para Adicionar Jogador -->
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Adicionar Jogador</h2>
+            
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" id="playerName" placeholder="Nome do jogador">
+            </div>
+
+            <div class="form-group">
+                <label>Número:</label>
+                <input type="number" id="playerNumber" min="1" max="99" placeholder="1-99">
+            </div>
+
+            <div class="form-group">
+                <label>Posição:</label>
+                <select id="playerPosition">
+                    <option value="Goleiro">Goleiro</option>
+                    <option value="Zagueiro">Zagueiro</option>
+                    <option value="Lateral">Lateral</option>
+                    <option value="Volante">Volante</option>
+                    <option value="Meia">Meia</option>
+                    <option value="Atacante">Atacante</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Força (0-100):</label>
+                <input type="range" id="playerStrength" min="0" max="100" value="50">
+                <span id="strengthValue">50</span>
+            </div>
+
+            <div class="form-group">
+                <label>Velocidade (0-100):</label>
+                <input type="range" id="playerSpeed" min="0" max="100" value="50">
+                <span id="speedValue">50</span>
+            </div>
+
+            <div class="form-group">
+                <label>Técnica (0-100):</label>
+                <input type="range" id="playerTechnique" min="0" max="100" value="50">
+                <span id="techniqueValue">50</span>
+            </div>
+
+            <button class="btn btn-success" onclick="confirmAddPlayer()">
+                ✅ Adicionar
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
