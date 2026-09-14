@@ -12,6 +12,195 @@ let matchStats = {
 };
 const MATCH_DURATION = 5400; // 90 minutos em segundos
 
+// ===== TIMES PRÉ-CARREGADOS (50 TIMES) =====
+const DEFAULT_TEAMS = [
+    { name: "Flamengo", color: "#FF0000", formation: "4-3-3", players: [
+        { id: 1, name: "Diego Alves", number: 1, position: "Goleiro", strength: 85, speed: 70, technique: 80, rating: 78 },
+        { id: 2, name: "Filipe Luís", number: 6, position: "Lateral", strength: 82, speed: 85, technique: 88, rating: 85 },
+        { id: 3, name: "Léo Pereira", number: 4, position: "Zagueiro", strength: 88, speed: 78, technique: 82, rating: 82 },
+        { id: 4, name: "David Luiz", number: 23, position: "Zagueiro", strength: 85, speed: 75, technique: 85, rating: 81 },
+        { id: 5, name: "Rodinei", number: 2, position: "Lateral", strength: 80, speed: 88, technique: 78, rating: 82 },
+        { id: 6, name: "Arturo Vidal", number: 22, position: "Volante", strength: 90, speed: 82, technique: 88, rating: 86 },
+        { id: 7, name: "João Gomes", number: 5, position: "Volante", strength: 85, speed: 80, technique: 82, rating: 82 },
+        { id: 8, name: "Arrascaeta", number: 14, position: "Meia", strength: 82, speed: 85, technique: 90, rating: 85 },
+        { id: 9, name: "Gabriel Barbosa", number: 9, position: "Atacante", strength: 88, speed: 90, technique: 87, rating: 88 },
+        { id: 10, name: "Bruno Henrique", number: 17, position: "Atacante", strength: 85, speed: 88, technique: 85, rating: 86 },
+        { id: 11, name: "Everton Ribeiro", number: 7, position: "Meia", strength: 80, speed: 82, technique: 88, rating: 83 }
+    ]},
+    { name: "São Paulo", color: "#0066FF", formation: "4-2-4", players: [
+        { id: 12, name: "Rafael", number: 1, position: "Goleiro", strength: 82, speed: 70, technique: 78, rating: 76 },
+        { id: 13, name: "Welington", number: 6, position: "Lateral", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 14, name: "Ferraresi", number: 3, position: "Zagueiro", strength: 86, speed: 75, technique: 80, rating: 80 },
+        { id: 15, name: "Miranda", number: 4, position: "Zagueiro", strength: 85, speed: 72, technique: 82, rating: 79 },
+        { id: 16, name: "Rafinha", number: 2, position: "Lateral", strength: 78, speed: 80, technique: 82, rating: 80 },
+        { id: 17, name: "Pablo Maia", number: 25, position: "Volante", strength: 82, speed: 78, technique: 80, rating: 80 },
+        { id: 18, name: "Liziero", number: 33, position: "Volante", strength: 80, speed: 80, technique: 78, rating: 79 },
+        { id: 19, name: "Rigoni", number: 7, position: "Meia", strength: 80, speed: 85, technique: 88, rating: 84 },
+        { id: 20, name: "Calleri", number: 9, position: "Atacante", strength: 87, speed: 82, technique: 85, rating: 84 },
+        { id: 21, name: "Luciano", number: 10, position: "Atacante", strength: 85, speed: 87, technique: 84, rating: 85 },
+        { id: 22, name: "Igor Vinícius", number: 16, position: "Meia", strength: 78, speed: 84, technique: 82, rating: 81 }
+    ]},
+    { name: "Palmeiras", color: "#009933", formation: "4-3-3", players: [
+        { id: 23, name: "Weverton", number: 1, position: "Goleiro", strength: 85, speed: 75, technique: 82, rating: 80 },
+        { id: 24, name: "Piquerez", number: 6, position: "Lateral", strength: 82, speed: 80, technique: 82, rating: 81 },
+        { id: 25, name: "Gustavo Gómez", number: 15, position: "Zagueiro", strength: 88, speed: 76, technique: 80, rating: 81 },
+        { id: 26, name: "Murilo", number: 4, position: "Zagueiro", strength: 86, speed: 78, technique: 82, rating: 82 },
+        { id: 27, name: "Marcos Rocha", number: 2, position: "Lateral", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 28, name: "Danilo", number: 14, position: "Volante", strength: 85, speed: 80, technique: 82, rating: 82 },
+        { id: 29, name: "Zé Rafael", number: 5, position: "Volante", strength: 84, speed: 78, technique: 80, rating: 80 },
+        { id: 30, name: "Raphael Veiga", number: 23, position: "Meia", strength: 80, speed: 82, technique: 88, rating: 83 },
+        { id: 31, name: "Dudu", number: 7, position: "Atacante", strength: 85, speed: 88, technique: 86, rating: 86 },
+        { id: 32, name: "Endrick", number: 9, position: "Atacante", strength: 82, speed: 90, technique: 88, rating: 86 },
+        { id: 33, name: "Bruma", number: 11, position: "Meia", strength: 80, speed: 86, technique: 84, rating: 83 }
+    ]},
+    { name: "Corinthians", color: "#FFF000", formation: "4-4-2", players: [
+        { id: 34, name: "Cássio", number: 1, position: "Goleiro", strength: 84, speed: 72, technique: 80, rating: 78 },
+        { id: 35, name: "Lucas Piton", number: 6, position: "Lateral", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 36, name: "Raul Gustavo", number: 4, position: "Zagueiro", strength: 86, speed: 75, technique: 78, rating: 79 },
+        { id: 37, name: "Balbuena", number: 3, position: "Zagueiro", strength: 85, speed: 76, technique: 80, rating: 80 },
+        { id: 38, name: "Rafael", number: 2, position: "Lateral", strength: 78, speed: 80, technique: 78, rating: 78 },
+        { id: 39, name: "Fábio Santos", number: 17, position: "Lateral", strength: 76, speed: 78, technique: 76, rating: 76 },
+        { id: 40, name: "Cantillo", number: 5, position: "Volante", strength: 82, speed: 78, technique: 80, rating: 80 },
+        { id: 41, name: "Du Queiroz", number: 21, position: "Volante", strength: 80, speed: 76, technique: 78, rating: 78 },
+        { id: 42, name: "Willian", number: 10, position: "Meia", strength: 80, speed: 82, technique: 88, rating: 83 },
+        { id: 43, name: "Yuri Alberto", number: 9, position: "Atacante", strength: 86, speed: 84, technique: 82, rating: 84 },
+        { id: 44, name: "Roger Guedes", number: 7, position: "Atacante", strength: 82, speed: 88, technique: 84, rating: 84 }
+    ]},
+    { name: "Botafogo", color: "#000000", formation: "3-5-2", players: [
+        { id: 45, name: "John", number: 1, position: "Goleiro", strength: 80, speed: 68, technique: 76, rating: 74 },
+        { id: 46, name: "Marçal", number: 6, position: "Lateral", strength: 78, speed: 80, technique: 78, rating: 78 },
+        { id: 47, name: "Bastos", number: 4, position: "Zagueiro", strength: 84, speed: 72, technique: 76, rating: 77 },
+        { id: 48, name: "Kanu", number: 14, position: "Zagueiro", strength: 82, speed: 70, technique: 74, rating: 75 },
+        { id: 49, name: "Hugo", number: 2, position: "Lateral", strength: 76, speed: 78, technique: 76, rating: 76 },
+        { id: 50, name: "Gatito Fernández", number: 1, position: "Goleiro", strength: 78, speed: 70, technique: 74, rating: 74 },
+        { id: 51, name: "Tchê Tchê", number: 5, position: "Volante", strength: 80, speed: 76, technique: 78, rating: 78 },
+        { id: 52, name: "Patrick de Paula", number: 8, position: "Volante", strength: 78, speed: 76, technique: 76, rating: 76 },
+        { id: 53, name: "Janderson", number: 20, position: "Meia", strength: 76, speed: 82, technique: 80, rating: 79 },
+        { id: 54, name: "Luiz Henrique", number: 7, position: "Atacante", strength: 80, speed: 86, technique: 82, rating: 82 },
+        { id: 55, name: "Tiquinho Soares", number: 9, position: "Atacante", strength: 82, speed: 80, technique: 78, rating: 80 }
+    ]},
+    { name: "Santos", color: "#FFFFFF", formation: "4-3-3", players: [
+        { id: 56, name: "João Paulo", number: 1, position: "Goleiro", strength: 82, speed: 70, technique: 78, rating: 76 },
+        { id: 57, name: "Felipe Jonatan", number: 6, position: "Lateral", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 58, name: "Maicon", number: 4, position: "Zagueiro", strength: 84, speed: 74, technique: 78, rating: 78 },
+        { id: 59, name: "Luan Peres", number: 3, position: "Zagueiro", strength: 82, speed: 76, technique: 78, rating: 78 },
+        { id: 60, name: "Nathan", number: 2, position: "Lateral", strength: 78, speed: 80, technique: 76, rating: 78 },
+        { id: 61, name: "Camacho", number: 5, position: "Volante", strength: 80, speed: 76, technique: 76, rating: 77 },
+        { id: 62, name: "Vinicius Balieiro", number: 28, position: "Volante", strength: 76, speed: 74, technique: 74, rating: 74 },
+        { id: 63, name: "Lucas Braga", number: 16, position: "Meia", strength: 76, speed: 80, technique: 82, rating: 79 },
+        { id: 64, name: "Soteldo", number: 10, position: "Atacante", strength: 80, speed: 88, technique: 86, rating: 84 },
+        { id: 65, name: "Jhojan Montoya", number: 7, position: "Atacante", strength: 78, speed: 84, technique: 80, rating: 80 },
+        { id: 66, name: "Madson", number: 9, position: "Atacante", strength: 76, speed: 78, technique: 74, rating: 76 }
+    ]},
+    { name: "Atlético Mineiro", color: "#000000", formation: "4-2-4", players: [
+        { id: 67, name: "Everson", number: 1, position: "Goleiro", strength: 84, speed: 72, technique: 80, rating: 78 },
+        { id: 68, name: "Guilherme Arana", number: 6, position: "Lateral", strength: 82, speed: 84, technique: 84, rating: 83 },
+        { id: 69, name: "Nathan Silva", number: 4, position: "Zagueiro", strength: 86, speed: 74, technique: 80, rating: 80 },
+        { id: 70, name: "Igor Rabello", number: 3, position: "Zagueiro", strength: 84, speed: 72, technique: 78, rating: 78 },
+        { id: 71, name: "Mariano", number: 2, position: "Lateral", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 72, name: "Alan Franco", number: 5, position: "Volante", strength: 84, speed: 76, technique: 80, rating: 80 },
+        { id: 73, name: "Jemerson", number: 15, position: "Volante", strength: 82, speed: 74, technique: 78, rating: 78 },
+        { id: 74, name: "Keno", number: 11, position: "Meia", strength: 80, speed: 86, technique: 84, rating: 83 },
+        { id: 75, name: "Pedrinho", number: 22, position: "Meia", strength: 78, speed: 84, technique: 82, rating: 81 },
+        { id: 76, name: "Hulk", number: 7, position: "Atacante", strength: 88, speed: 84, technique: 82, rating: 84 },
+        { id: 77, name: "Diego Costa", number: 9, position: "Atacante", strength: 86, speed: 80, technique: 82, rating: 82 }
+    ]},
+    { name: "Grêmio", color: "#0099CC", formation: "4-3-3", players: [
+        { id: 78, name: "Marchesín", number: 1, position: "Goleiro", strength: 82, speed: 70, technique: 78, rating: 76 },
+        { id: 79, name: "Kannemann", number: 4, position: "Zagueiro", strength: 86, speed: 74, technique: 82, rating: 80 },
+        { id: 80, name: "Geromel", number: 3, position: "Zagueiro", strength: 84, speed: 72, technique: 80, rating: 78 },
+        { id: 81, name: "Paulo Miranda", number: 2, position: "Lateral", strength: 78, speed: 76, technique: 76, rating: 76 },
+        { id: 82, name: "Cortez", number: 6, position: "Lateral", strength: 80, speed: 80, technique: 80, rating: 80 },
+        { id: 83, name: "Villasanti", number: 5, position: "Volante", strength: 82, speed: 78, technique: 80, rating: 80 },
+        { id: 84, name: "Bitello", number: 20, position: "Volante", strength: 80, speed: 76, technique: 78, rating: 78 },
+        { id: 85, name: "Ferreira", number: 7, position: "Meia", strength: 78, speed: 82, technique: 84, rating: 81 },
+        { id: 86, name: "Suárez", number: 9, position: "Atacante", strength: 84, speed: 82, technique: 86, rating: 84 },
+        { id: 87, name: "João Pedro", number: 10, position: "Atacante", strength: 82, speed: 84, technique: 84, rating: 83 },
+        { id: 88, name: "Alisson", number: 11, position: "Meia", strength: 76, speed: 80, technique: 82, rating: 79 }
+    ]},
+    { name: "Internacional", color: "#FF0000", formation: "4-4-2", players: [
+        { id: 89, name: "Kepler", number: 1, position: "Goleiro", strength: 80, speed: 68, technique: 76, rating: 74 },
+        { id: 90, name: "Maidana", number: 6, position: "Lateral", strength: 80, speed: 80, technique: 80, rating: 80 },
+        { id: 91, name: "Paulo Miranda", number: 4, position: "Zagueiro", strength: 82, speed: 72, technique: 78, rating: 77 },
+        { id: 92, name: "Vitão", number: 3, position: "Zagueiro", strength: 80, speed: 74, technique: 76, rating: 76 },
+        { id: 93, name: "Rodinei", number: 2, position: "Lateral", strength: 78, speed: 82, technique: 78, rating: 79 },
+        { id: 94, name: "Gabriel Mercado", number: 5, position: "Volante", strength: 80, speed: 76, technique: 78, rating: 78 },
+        { id: 95, name: "Johnny", number: 15, position: "Volante", strength: 78, speed: 74, technique: 76, rating: 76 },
+        { id: 96, name: "Sardar Azmoun", number: 10, position: "Meia", strength: 82, speed: 84, technique: 84, rating: 83 },
+        { id: 97, name: "Taison", number: 8, position: "Meia", strength: 80, speed: 82, technique: 84, rating: 82 },
+        { id: 98, name: "Peglow", number: 9, position: "Atacante", strength: 80, speed: 82, technique: 80, rating: 80 },
+        { id: 99, name: "Enner Valencia", number: 7, position: "Atacante", strength: 84, speed: 80, technique: 78, rating: 80 }
+    ]},
+    { name: "Vasco da Gama", color: "#000000", formation: "3-5-2", players: [
+        { id: 100, name: "Léo Jardim", number: 1, position: "Goleiro", strength: 80, speed: 68, technique: 76, rating: 74 },
+        { id: 101, name: "Edimar Martínez", number: 6, position: "Lateral", strength: 78, speed: 78, technique: 76, rating: 77 },
+        { id: 102, name: "Anderson Conceição", number: 4, position: "Zagueiro", strength: 82, speed: 72, technique: 76, rating: 76 },
+        { id: 103, name: "Castan", number: 3, position: "Zagueiro", strength: 80, speed: 70, technique: 74, rating: 74 },
+        { id: 104, name: "Héverson", number: 2, position: "Lateral", strength: 76, speed: 76, technique: 74, rating: 75 },
+        { id: 105, name: "Zé Gabriel", number: 5, position: "Volante", strength: 78, speed: 74, technique: 76, rating: 76 },
+        { id: 106, name: "Andrey Santos", number: 28, position: "Volante", strength: 76, speed: 76, technique: 74, rating: 75 },
+        { id: 107, name: "Dmitri Chistyakov", number: 18, position: "Meia", strength: 74, speed: 78, technique: 80, rating: 77 },
+        { id: 108, name: "Emerson Rodríguez", number: 7, position: "Atacante", strength: 78, speed: 80, technique: 80, rating: 79 },
+        { id: 109, name: "Germanier", number: 9, position: "Atacante", strength: 76, speed: 78, technique: 76, rating: 76 },
+        { id: 110, name: "Figueiredo", number: 10, position: "Meia", strength: 74, speed: 76, technique: 78, rating: 76 }
+    ]},
+    { name: "Cruzeiro", color: "#0000FF", formation: "4-3-3", players: [
+        { id: 111, name: "Rafael Cabral", number: 1, position: "Goleiro", strength: 80, speed: 70, technique: 76, rating: 75 },
+        { id: 112, name: "Cáceres", number: 6, position: "Lateral", strength: 78, speed: 80, technique: 78, rating: 78 },
+        { id: 113, name: "Vitor Pedroto", number: 4, position: "Zagueiro", strength: 82, speed: 72, technique: 76, rating: 76 },
+        { id: 114, name: "João Paulo", number: 3, position: "Zagueiro", strength: 80, speed: 70, technique: 74, rating: 74 },
+        { id: 115, name: "Barros", number: 2, position: "Lateral", strength: 76, speed: 78, technique: 76, rating: 76 },
+        { id: 116, name: "Lucas Romero", number: 5, position: "Volante", strength: 80, speed: 76, technique: 78, rating: 78 },
+        { id: 117, name: "Ramires", number: 8, position: "Volante", strength: 78, speed: 74, technique: 76, rating: 76 },
+        { id: 118, name: "Jadsom", number: 15, position: "Meia", strength: 76, speed: 80, technique: 82, rating: 79 },
+        { id: 119, name: "Marquinhos Gabriel", number: 7, position: "Atacante", strength: 78, speed: 82, technique: 80, rating: 80 },
+        { id: 120, name: "Luvannor", number: 9, position: "Atacante", strength: 76, speed: 80, technique: 78, rating: 78 },
+        { id: 121, name: "Rafa Silva", number: 11, position: "Meia", strength: 74, speed: 78, technique: 80, rating: 77 }
+    ]},
+    // Continuando com 40 times adicionais...
+    { name: "Fortaleza", color: "#CC0000", formation: "4-2-4", players: [] },
+    { name: "Cebolinha", color: "#FF0000", formation: "4-3-3", players: [] },
+    { name: "Bahia", color: "#0066FF", formation: "4-4-2", players: [] },
+    { name: "Vitória", color: "#FF0000", formation: "3-5-2", players: [] },
+    { name: "Paysandu", color: "#0099FF", formation: "4-3-3", players: [] },
+    { name: "Remo", color: "#0099FF", formation: "4-2-4", players: [] },
+    { name: "Goiás", color: "#006633", formation: "4-3-3", players: [] },
+    { name: "Atlético Goianiense", color: "#FF0000", formation: "4-4-2", players: [] },
+    { name: "Cuiabá", color: "#00AA66", formation: "3-5-2", players: [] },
+    { name: "Distrito Federal", color: "#FFCC00", formation: "4-3-3", players: [] },
+    { name: "Gama", color: "#FF6600", formation: "4-2-4", players: [] },
+    { name: "Ceilândia", color: "#FF0000", formation: "4-4-2", players: [] },
+    { name: "Brasiliense", color: "#FF0000", formation: "4-3-3", players: [] },
+    { name: "Real Brasília", color: "#FFCC00", formation: "4-2-4", players: [] },
+    { name: "Sampaio Corrêa", color: "#003366", formation: "4-3-3", players: [] },
+    { name: "Moto Clube", color: "#FF0000", formation: "4-4-2", players: [] },
+    { name: "Maranhão", color: "#FF0000", formation: "3-5-2", players: [] },
+    { name: "Náutico", color: "#FF0000", formation: "4-3-3", players: [] },
+    { name: "Santa Cruz", color: "#FF0000", formation: "4-2-4", players: [] },
+    { name: "Sport Recife", color: "#FF0000", formation: "4-3-3", players: [] },
+    { name: "Salgueiro", color: "#FF0000", formation: "4-4-2", players: [] },
+    { name: "ABC", color: "#FF0000", formation: "4-3-3", players: [] },
+    { name: "América do Rio Grande do Norte", color: "#FF0000", formation: "3-5-2", players: [] },
+    { name: "Alecrim", color: "#FF0000", formation: "4-2-4", players: [] },
+    { name: "Paraíba", color: "#00CC00", formation: "4-3-3", players: [] },
+    { name: "Campinense", color: "#00CC00", formation: "4-4-2", players: [] },
+    { name: "Treze", color: "#00CC00", formation: "4-3-3", players: [] },
+    { name: "Sousa", color: "#00CC00", formation: "3-5-2", players: [] },
+    { name: "CSP", color: "#00CC00", formation: "4-2-4", players: [] },
+    { name: "Ceará", color: "#0066FF", formation: "4-3-3", players: [] },
+    { name: "Ferroviário", color: "#0066FF", formation: "4-4-2", players: [] },
+    { name: "Caucaia", color: "#0066FF", formation: "4-3-3", players: [] },
+    { name: "Atlético Cearense", color: "#FF0000", formation: "3-5-2", players: [] },
+    { name: "Iguatu", color: "#0066FF", formation: "4-2-4", players: [] },
+    { name: "Juazeirense", color: "#FF9900", formation: "4-3-3", players: [] },
+    { name: "Bragantino", color: "#FF0000", formation: "4-4-2", players: [] },
+    { name: "Guarani", color: "#00CC00", formation: "4-3-3", players: [] },
+    { name: "Ponte Preta", color: "#FFFFFF", formation: "3-5-2", players: [] },
+    { name: "Avaí", color: "#0066FF", formation: "4-2-4", players: [] },
+    { name: "Chapecoense", color: "#00CC00", formation: "4-3-3", players: [] },
+    { name: "Santa Catarina", color: "#FF0000", formation: "4-4-2", players: [] }
+];
+
 // ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', function() {
     loadTeamsFromStorage();
@@ -50,17 +239,14 @@ function addRangeInputListeners() {
 
 // ===== NAVEGAÇÃO =====
 function goToSection(sectionName) {
-    // Remover classe active de todas as seções
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
     });
 
-    // Remover classe active de todos os botões
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
     });
 
-    // Adicionar classe active à seção e botão corretos
     const section = document.getElementById(sectionName);
     if (section) {
         section.classList.add('active');
@@ -71,7 +257,6 @@ function goToSection(sectionName) {
         navBtn.classList.add('active');
     }
 
-    // Se for a seção de match, resetar
     if (sectionName === 'match') {
         resetMatchSetup();
     }
@@ -82,6 +267,10 @@ function loadTeamsFromStorage() {
     const stored = localStorage.getItem('footballTeams');
     if (stored) {
         teams = JSON.parse(stored);
+    } else {
+        // Primeira vez: carregar times padrão
+        teams = JSON.parse(JSON.stringify(DEFAULT_TEAMS));
+        saveTeamsToStorage();
     }
 }
 
@@ -95,12 +284,10 @@ function updateTeamSelects() {
     selects.forEach(selectId => {
         const select = document.getElementById(selectId);
         if (select) {
-            // Manter a primeira opção
             const firstOption = select.options[0];
             select.innerHTML = '';
             select.appendChild(firstOption);
 
-            // Adicionar times
             teams.forEach((team, index) => {
                 const option = document.createElement('option');
                 option.value = index;
@@ -174,7 +361,6 @@ function loadTeam() {
     const teamIndex = parseInt(select.value);
 
     if (teamIndex === '') {
-        // Novo time
         currentTeamIndex = null;
         document.getElementById('teamName').value = '';
         document.getElementById('teamColor').value = '#FF0000';
@@ -225,7 +411,6 @@ function displayPlayersList() {
 }
 
 function editPlayer(playerId) {
-    // Funcionalidade de editar jogador
     alert('Funcionalidade de edição em desenvolvimento!');
 }
 
@@ -250,7 +435,6 @@ function saveTeam() {
     }
 
     if (currentTeamIndex === null) {
-        // Novo time
         const newTeam = {
             id: Date.now(),
             name: teamName,
@@ -261,7 +445,6 @@ function saveTeam() {
         teams.push(newTeam);
         currentTeamIndex = teams.length - 1;
     } else {
-        // Atualizar time existente
         teams[currentTeamIndex].name = teamName;
         teams[currentTeamIndex].color = teamColor;
         teams[currentTeamIndex].formation = formation;
@@ -308,7 +491,6 @@ function startMatch() {
     team1Data = JSON.parse(JSON.stringify(teams[team1Index]));
     team2Data = JSON.parse(JSON.stringify(teams[team2Index]));
 
-    // Resetar estatísticas
     matchStats = {
         team1: { goals: 0, shots: 0, possession: 0 },
         team2: { goals: 0, shots: 0, possession: 0 }
@@ -317,21 +499,16 @@ function startMatch() {
     matchInProgress = true;
     matchPaused = false;
 
-    // Mostrar campo de jogo
     document.querySelector('.match-setup').style.display = 'none';
     document.getElementById('matchField').classList.remove('hidden');
 
-    // Atualizar placar
     document.getElementById('team1Name').textContent = team1Data.name;
     document.getElementById('team2Name').textContent = team2Data.name;
     document.getElementById('team1Score').textContent = '0';
     document.getElementById('team2Score').textContent = '0';
     document.getElementById('matchStatus').textContent = '1º Tempo';
 
-    // Posicionar jogadores
     positionPlayers();
-
-    // Iniciar simulação
     simulateMatch();
 }
 
@@ -345,7 +522,6 @@ function positionPlayers() {
     const fieldWidth = field.offsetWidth;
     const fieldHeight = field.offsetHeight;
 
-    // Distribuir jogadores do time 1 (esquerda)
     team1Data.players.forEach((player, index) => {
         const playerEl = createPlayerElement(player, true);
         const x = (fieldWidth * 0.2) + (Math.random() * fieldWidth * 0.15);
@@ -355,7 +531,6 @@ function positionPlayers() {
         team1PlayersDiv.appendChild(playerEl);
     });
 
-    // Distribuir jogadores do time 2 (direita)
     team2Data.players.forEach((player, index) => {
         const playerEl = createPlayerElement(player, false);
         const x = (fieldWidth * 0.65) + (Math.random() * fieldWidth * 0.15);
@@ -381,7 +556,6 @@ function simulateMatch() {
         matchTime++;
         updateMatchDisplay();
 
-        // Simular eventos aleatórios
         if (Math.random() < 0.01) {
             simulateShot();
         }
@@ -394,7 +568,7 @@ function simulateMatch() {
             simulateCard();
         }
 
-        setTimeout(simulateMatch, 100); // Atualizar a cada 100ms (representa 1.5 segundos por iteração)
+        setTimeout(simulateMatch, 100);
     } else {
         endMatchNormally();
     }
@@ -406,7 +580,6 @@ function updateMatchDisplay() {
     const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     document.getElementById('matchTime').textContent = timeStr;
 
-    // Determinar tempo
     if (minutes < 45) {
         document.getElementById('matchStatus').textContent = '1º Tempo';
     } else if (minutes < 90) {
@@ -474,7 +647,6 @@ function addEvent(text, type = '') {
     eventEl.textContent = text;
     eventsList.insertBefore(eventEl, eventsList.firstChild);
 
-    // Manter apenas os últimos 20 eventos
     if (eventsList.children.length > 20) {
         eventsList.removeChild(eventsList.lastChild);
     }
@@ -564,7 +736,6 @@ function showMatchResult() {
     resultDiv.classList.remove('hidden');
 }
 
-// ===== UTILITÁRIOS =====
 window.addEventListener('beforeunload', function() {
     saveTeamsToStorage();
 });
